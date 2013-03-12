@@ -1,4 +1,4 @@
 BMI-Calculator
 ==============
 
-full stack app using $, Express and MySQL
+full stack app using $, Express, Socket.io and MySQL.
