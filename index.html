@@ -1,0 +1,30 @@
+<!-- this is what happens when howard gets bored. -->
+<!DOCTYPE html>
+<html>
+  <head>
+      <link rel="stylesheet" type="text/css" href="css.css">
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+      <script src="socket.io/socket.io.js"></script>
+      <script type="text/javascript" src="app.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <form>
+        <section class = "info">
+          <h1>Weigh in.</h1>
+          <label>Weight (kg)</label>
+          <input type="text" placeholder="90" class="weight"/>
+          <label>Height (cm)</label>
+          <input type="text" placeholder="185" class="height"/>
+          <input type="submit" class="submittal" value="submit."/>
+        </section>
+      </form>
+
+      <div class="bmi">
+      </div>
+      <div class="feedback">
+      </div>
+    </div>
+
+  </body>
+</html>
