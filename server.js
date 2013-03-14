@@ -2,10 +2,7 @@ var app = require('express')();
 var server = require('http').createServer(app)
 var io = require('socket.io').listen(server, {log: false});
 var fs = require('fs');
-var qs = require('querystring');
 var mysql = require('mysql');
-
-//--------------------------------------------------------
 
 var connection = mysql.createConnection({
   host     : 'localhost',
@@ -14,34 +11,26 @@ var connection = mysql.createConnection({
   database : 'bmi'
 });
 
+var reusableGetter = function(request, response, path){
+  fs.readFile(path, function(err, data){
+    if (err) {
+      throw err;
+    }
+    response.end(data);
+  });
+};
+
 app.get('/', function(request, response){
-    fs.readFile('index.html', function(err, data){
-      if(err){
-        throw err;
-      }
-      response.end(data);
-    });
+  reusableGetter(request, response, 'index.html');
 });
 
 app.get('/css.css', function(request, response){
-fs.readFile('css.css', function(err, data){
-      if(err){
-        throw err;
-      }
-      response.end(data);
-    });
+  reusableGetter(request, response, 'css.css');
 });
 
 app.get('/app.js', function(request, response){
-    fs.readFile('app.js', function(err, data){
-      if(err){
-        throw err;
-      }
-      response.end(data);
-    });
+  reusableGetter(request, response, 'app.js');
 });
-
-//--------------------------------------------------------
 
 io.sockets.on('connection', function(socket){
   socket.on('message', function(data){
@@ -50,7 +39,6 @@ io.sockets.on('connection', function(socket){
     });
 
     connection.query('SELECT AVG(bmi) FROM userinfo', function(err, data){
-      console.log(data);
       socket.emit('postData', data[0]);
       socket.broadcast.emit('postData', data[0]);
     });
