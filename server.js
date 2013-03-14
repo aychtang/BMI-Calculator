@@ -11,7 +11,7 @@ var connection = mysql.createConnection({
   database : 'bmi'
 });
 
-var reusableGetter = function(request, response, path){
+var serveFile = function(request, response, path){
   fs.readFile(path, function(err, data){
     if (err) {
       throw err;
@@ -21,15 +21,15 @@ var reusableGetter = function(request, response, path){
 };
 
 app.get('/', function(request, response){
-  reusableGetter(request, response, 'index.html');
+  serveFile(request, response, 'index.html');
 });
 
 app.get('/css.css', function(request, response){
-  reusableGetter(request, response, 'css.css');
+  serveFile(request, response, 'css.css');
 });
 
 app.get('/app.js', function(request, response){
-  reusableGetter(request, response, 'app.js');
+  serveFile(request, response, 'app.js');
 });
 
 io.sockets.on('connection', function(socket){
